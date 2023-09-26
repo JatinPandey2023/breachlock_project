@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Celery Task URLs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .task-url-list {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+        .task-url-list-item {
+            margin-bottom: 10px;
+        }
+        .task-url {
+            font-size: 18px;
+            color: #007bff;
+            text-decoration: none;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Celery Task URLs</h1>
+    <ul class="task-url-list">
+        {% for task_id in task_ids %}
+        <li class="task-url-list-item">
+            <a class="task-url" href = "http://localhost:8000/publisher_subs_app/check_result/{{task_id}}";> Task {{ task_id }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+
