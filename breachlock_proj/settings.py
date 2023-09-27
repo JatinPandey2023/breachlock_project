@@ -134,3 +134,12 @@ CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+
+from kombu import Queue
+
+CELERY_QUEUES = [
+    Queue('addition', routing_key='addition'),
+    Queue('subtraction', routing_key='subtraction'),
+    Queue('multiplication', routing_key='multiplication'),
+    Queue('dlq', routing_key='dlq'),
+]

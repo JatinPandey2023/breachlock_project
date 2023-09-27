@@ -27,8 +27,13 @@ def check_result(request, task_id):
     result = app.AsyncResult(task_id)
     print("task_id", result, task_id, type(task_id), result.status, result.ready())
     if result.ready():
+        if result.status=='SUCCESS':
         # Task has completed, retrieve the result
-        data = {'status': 'completed', 'result': result.result}
+            data = {'status': 'completed', 'result': result.result}
+        else:
+            data = {'status': 'failed', 'result': str(result.result)}
+
+
     else:
         # Task is still pending or running
         data = {'status': 'pending'}
@@ -44,9 +49,12 @@ class NumbersInputView(APIView, TemplateView):
         return self.render_to_response({})
 
     def post(self, request):
-        number1 = int(request.POST.getlist('number1')[0])
-        number2 = int(request.POST.getlist('number2')[0])
-        print('numbers ', number1 , number2)
+        # number1 = int(request.POST.getlist('number1')[0])
+        # number2 = int(request.POST.getlist('number2')[0])
+        number1 = request.POST.getlist('number1')[0]
+        number2 = request.POST.getlist('number2')[0]
+
+        print('numbers ', number1 , number2, type(number1))
         add_task_id = add.apply_async(args=(number1, number2), queue='addition')
         sub_task_id = subtract.apply_async(args=(number1, number2), queue='subtraction')
         mul_task_id = multiply.apply_async(args=(number1, number2), queue='multiplication')
